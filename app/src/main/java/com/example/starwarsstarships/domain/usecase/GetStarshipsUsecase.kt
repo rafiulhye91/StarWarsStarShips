@@ -11,8 +11,9 @@ import kotlinx.coroutines.flow.flow
 import okhttp3.internal.immutableListOf
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class GetStarshipsUsecase(private val repository: StarshipsRepository) {
+class GetStarshipsUsecase @Inject constructor (private val repository: StarshipsRepository) {
 
     operator fun invoke(): Flow<Resource<List<Starship>>> = flow {
         try {

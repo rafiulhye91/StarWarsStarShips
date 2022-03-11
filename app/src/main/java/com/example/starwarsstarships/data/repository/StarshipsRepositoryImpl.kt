@@ -4,8 +4,9 @@ import com.example.starwarsstarships.data.model.StarshipDTO
 import com.example.starwarsstarships.data.model.StarshipsDTO
 import com.example.starwarsstarships.data.remote.ApiServices
 import com.example.starwarsstarships.domain.repository.StarshipsRepository
+import javax.inject.Inject
 
-class StarshipsRepositoryImpl(private val mApiServices: ApiServices): StarshipsRepository {
+class StarshipsRepositoryImpl @Inject constructor (private val mApiServices: ApiServices): StarshipsRepository {
     override suspend fun getStarships(): StarshipsDTO {
         return mApiServices.getStartships()
     }
