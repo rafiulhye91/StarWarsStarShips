@@ -1,6 +1,7 @@
 package com.example.starwarsstarships.data.model
 
 
+import com.example.starwarsstarships.domain.model.Starship
 import com.google.gson.annotations.SerializedName
 
 data class StarshipDTO(
@@ -40,4 +41,25 @@ data class StarshipDTO(
     val starshipClass: String,
     @SerializedName("url")
     val url: String
-)
+){
+    fun toStarship():Starship{
+        return Starship(
+            cargoCapacity = this.cargoCapacity,
+            consumables = this.consumables,
+            costInCredits = this.costInCredits,
+            created= this.created,
+            crew = this.crew,
+            edited = this.edited,
+            hyperdriveRating = this.hyperdriveRating,
+            length = this.length,
+            mGLT = this.mGLT,
+            manufacturer = this.manufacturer,
+            maxAtmospheringSpeed = this.maxAtmospheringSpeed,
+            model = this.model,
+            name = this.name,
+            passengers = this.passengers,
+            pilots = this.pilots,
+            starshipClass = this.starshipClass
+        )
+    }
+}
