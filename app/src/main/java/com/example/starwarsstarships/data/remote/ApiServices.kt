@@ -6,7 +6,8 @@ import retrofit2.http.Query
 
 interface ApiServices {
     @GET("starships/")
-    suspend fun getStartships():StarshipsDTO
+    suspend fun getStarships(): StarshipsDTO
+
     @GET("starships/")
-    suspend fun getStartshipsFromPage(@Query("page") currentPage:Int):StarshipsDTO
+    suspend fun getStarshipsFromPage(@Query("page") currentPage: Int): StarshipsDTO
 }

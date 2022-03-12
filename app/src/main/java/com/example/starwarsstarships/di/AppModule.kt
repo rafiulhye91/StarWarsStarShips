@@ -16,13 +16,13 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun provideApiServices():ApiServices{
-        return  RetrofitInstance.getApiServices()
+    fun provideApiServices(): ApiServices {
+        return RetrofitInstance.getApiServices()
     }
 
     @Singleton
     @Provides
-    fun provideRepository(apiServices: ApiServices):StarshipsRepository{
+    fun provideRepository(apiServices: ApiServices): StarshipsRepository {
         return StarshipsRepositoryImpl(apiServices)
     }
 

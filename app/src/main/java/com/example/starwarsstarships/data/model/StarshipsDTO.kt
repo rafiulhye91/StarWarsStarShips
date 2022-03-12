@@ -11,5 +11,5 @@ data class StarshipsDTO(
     @SerializedName("previous")
     val previous: String?,
     @SerializedName("results")
-    val starshipDT0s: List<StarshipDTO>
+    val starshipInfoDT0s: List<StarshipInfoDTO>
 )

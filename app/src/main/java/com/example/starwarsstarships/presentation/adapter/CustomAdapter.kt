@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.starwarsstarships.R
 import com.example.starwarsstarships.domain.model.Starship
 
-class CustomAdapter: RecyclerView.Adapter <CustomAdapter.ViewHolder>(){
-    class ViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
-        val textView:TextView
+class CustomAdapter : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textView: TextView
+
         init {
             textView = itemView.findViewById(R.id.txt_view_starship_name)
         }
@@ -19,7 +20,7 @@ class CustomAdapter: RecyclerView.Adapter <CustomAdapter.ViewHolder>(){
     private lateinit var mList: List<Starship>
     private var mListener: OnItemClickListener? = null
 
-    fun setData( list: List<Starship>){
+    fun setData(list: List<Starship>) {
         mList = list
     }
 
@@ -44,7 +45,7 @@ class CustomAdapter: RecyclerView.Adapter <CustomAdapter.ViewHolder>(){
         mListener = listener
     }
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onItemClicked(starship: Starship)
     }
 }

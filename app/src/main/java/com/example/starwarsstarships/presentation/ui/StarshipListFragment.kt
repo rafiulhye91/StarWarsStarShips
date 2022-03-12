@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,15 +24,15 @@ import com.example.starwarsstarships.presentation.viewmodel.StarshipInfoViewMode
 import com.example.starwarsstarships.presentation.viewmodel.StarshipListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class StarshipListFragment: Fragment(R.layout.fragment_starship_list), CustomAdapter.OnItemClickListener {
+class StarshipListFragment : Fragment(R.layout.fragment_starship_list),
+    CustomAdapter.OnItemClickListener {
 
     private lateinit var mBinding: FragmentStarshipListBinding
     private lateinit var starshipListViewModel: StarshipListViewModel
     private val starshipInfoViewModel: StarshipInfoViewModel by activityViewModels()
-    private lateinit var mCustomAdapter:CustomAdapter
-    private lateinit var fragment:StarshipInfoFragment
+    private lateinit var mCustomAdapter: CustomAdapter
+    private lateinit var fragment: StarshipInfoFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,17 +43,16 @@ class StarshipListFragment: Fragment(R.layout.fragment_starship_list), CustomAda
         mBinding = FragmentStarshipListBinding.inflate(layoutInflater)
         mCustomAdapter = CustomAdapter()
         setRecyclerView()
-        fragment = StarshipInfoFragment()
         return mBinding.root
     }
 
     override fun onResume() {
         super.onResume()
         starshipListViewModel.getStarships()
-        val list:MutableList<Starship> = mutableListOf()
+        val list: MutableList<Starship> = mutableListOf()
         starshipListViewModel.mStarshipsState.observe(
             this, Observer {
-                if (it.isLoading){
+                if (it.isLoading) {
                     Log.d(Constants.TAG, "loading...")
                     setLoadingUI()
                     return@Observer
@@ -60,11 +62,11 @@ class StarshipListFragment: Fragment(R.layout.fragment_starship_list), CustomAda
                         Log.d(Constants.TAG, it.name)
                         list.add(it)
                     }
-                    Log.d(Constants.TAG,  "size of the list "+list.size.toString())
+                    Log.d(Constants.TAG, "size of the list " + list.size.toString())
                     setDataUI(list)
                     return@Observer
                 }
-                if (!it.error!!.isEmpty()){
+                if (!it.error!!.isEmpty()) {
                     Log.d(Constants.TAG, it.error)
                     setErrorUI(it)
                 }
@@ -73,7 +75,7 @@ class StarshipListFragment: Fragment(R.layout.fragment_starship_list), CustomAda
         )
     }
 
-    private fun setDataUI(starships:List<Starship>) {
+    private fun setDataUI(starships: List<Starship>) {
         mBinding.progressBar.visibility = View.GONE
         mBinding.recyclerViewStarships.visibility = View.VISIBLE
         mCustomAdapter.setData(starships)
@@ -88,7 +90,7 @@ class StarshipListFragment: Fragment(R.layout.fragment_starship_list), CustomAda
             .addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
     }
 
-    private fun setLoadingUI(){
+    private fun setLoadingUI() {
         mBinding.progressBar.visibility = View.VISIBLE
         mBinding.recyclerViewStarships.visibility = View.GONE
     }
@@ -100,19 +102,13 @@ class StarshipListFragment: Fragment(R.layout.fragment_starship_list), CustomAda
     }
 
     override fun onItemClicked(starship: Starship) {
-        Log.d(Constants.TAG,  starship.name+" "+starship.model+" clicked!")
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         starshipInfoViewModel.setStarshipInfo(starship)
-//        fragmentManager.addFragmentOnAttachListener { fragmentManager, fragment ->
-//
-//        }
+        fragment = StarshipInfoFragment()
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container_view, fragment)
         fragmentTransaction.addToBackStack(null)
-
         fragmentTransaction.commit()
-
-
     }
 
 }

@@ -1,7 +1,5 @@
 package com.example.starwarsstarships.domain.model
 
-import com.google.gson.annotations.SerializedName
-
 data class Starship(
     val cargoCapacity: String,
     val consumables: String,

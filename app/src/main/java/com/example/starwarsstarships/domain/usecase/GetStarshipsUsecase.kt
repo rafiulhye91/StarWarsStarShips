@@ -1,8 +1,5 @@
 package com.example.starwarsstarships.domain.usecase
 
-import android.util.Log
-import com.example.starwarsstarships.common.Constants
-import com.example.starwarsstarships.common.Constants.TAG
 import com.example.starwarsstarships.common.Resource
 import com.example.starwarsstarships.data.remote.Constants.HTTP_ERROR
 import com.example.starwarsstarships.data.remote.Constants.NO_INTERNET_ERROR
@@ -15,40 +12,38 @@ import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class GetStarshipsUsecase @Inject constructor (private val repository: StarshipsRepository) {
+class GetStarshipsUsecase @Inject constructor(private val repository: StarshipsRepository) {
 
     operator fun invoke(): Flow<Resource<List<Starship>>> = flow {
         try {
             emit(Resource.Loading())
             var starshipDT0 = repository.getStarships()
-            var starshipDTOs = starshipDT0.starshipDT0s
+            var starshipDTOs = starshipDT0.starshipInfoDT0s
 
             var starships: MutableList<Starship> = mutableListOf<Starship>()
             starshipDTOs.forEach { it ->
                 starships.add(it.toStarship())
             }
-            emit(Resource.Success<List<Starship>>(starships))
-            while (starshipDT0.next!=null){
-                val pageNo:Int = getPageNo(starshipDT0.next.toString());
+            while (starshipDT0.next != null) {
+                val pageNo: Int = getPageNo(starshipDT0.next.toString());
                 starshipDT0 = repository.getStarshipsFromPage(pageNo)
-                starshipDTOs = starshipDT0.starshipDT0s
+                starshipDTOs = starshipDT0.starshipInfoDT0s
                 starshipDTOs.forEach { it ->
                     starships.add(it.toStarship())
                 }
-                emit(Resource.Success<List<Starship>>(starships))
             }
-
+            emit(Resource.Success<List<Starship>>(starships))
 
         } catch (e: HttpException) {
-            emit(Resource.Error<List<Starship>>(message = e.localizedMessage+HTTP_ERROR))
+            emit(Resource.Error<List<Starship>>(message = e.localizedMessage + HTTP_ERROR))
         } catch (e: IOException) {
-            emit(Resource.Error<List<Starship>>(message = e.localizedMessage+NO_INTERNET_ERROR))
+            emit(Resource.Error<List<Starship>>(message = e.localizedMessage + NO_INTERNET_ERROR))
         } catch (e: Exception) {
-            emit(Resource.Error<List<Starship>>(message = e.localizedMessage+UNKNOWN_ERROR))
+            emit(Resource.Error<List<Starship>>(message = e.localizedMessage + UNKNOWN_ERROR))
         }
     }
 
     private fun getPageNo(next: String): Int {
-        return next.filter{ it.isDigit() }.toInt()
+        return next.filter { it.isDigit() }.toInt()
     }
 }

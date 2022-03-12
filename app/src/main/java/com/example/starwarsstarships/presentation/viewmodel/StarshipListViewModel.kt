@@ -13,21 +13,23 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class StarshipListViewModel @Inject constructor(private val getStarshipsUsecase: GetStarshipsUsecase):ViewModel() {
+class StarshipListViewModel @Inject constructor(private val getStarshipsUsecase: GetStarshipsUsecase) :
+    ViewModel() {
 
-    private val _mStarshipsState: MutableLiveData<StarshipsState>  = MutableLiveData<StarshipsState>()
-    val mStarshipsState:LiveData<StarshipsState> = _mStarshipsState
+    private val _mStarshipsState: MutableLiveData<StarshipsState> =
+        MutableLiveData<StarshipsState>()
+    val mStarshipsState: LiveData<StarshipsState> = _mStarshipsState
 
-    fun getStarships(){
+    fun getStarships() {
         getStarshipsUsecase().onEach {
-            if(it is Resource.Loading){
+            if (it is Resource.Loading) {
                 _mStarshipsState.value = StarshipsState(isLoading = true)
             }
-            if(it is Resource.Success){
+            if (it is Resource.Success) {
                 _mStarshipsState.value = StarshipsState(starShips = it.data, isLoading = false)
             }
-            if(it is Resource.Error){
-                _mStarshipsState.value = StarshipsState(error = it.errMessage,isLoading = false)
+            if (it is Resource.Error) {
+                _mStarshipsState.value = StarshipsState(error = it.errMessage, isLoading = false)
             }
         }.launchIn(viewModelScope)
     }

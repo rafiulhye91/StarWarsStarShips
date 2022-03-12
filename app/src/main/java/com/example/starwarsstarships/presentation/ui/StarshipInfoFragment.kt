@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.starwarsstarships.R
 import com.example.starwarsstarships.common.Constants
 import com.example.starwarsstarships.databinding.FragmentStarshipDetailsBinding
@@ -18,7 +16,7 @@ import com.example.starwarsstarships.presentation.viewmodel.StarshipInfoViewMode
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StarshipInfoFragment:Fragment(R.layout.fragment_starship_details) {
+class StarshipInfoFragment : Fragment(R.layout.fragment_starship_details) {
 
     private lateinit var mBinding: FragmentStarshipDetailsBinding
     private val viewModel: StarshipInfoViewModel by activityViewModels()
@@ -36,7 +34,7 @@ class StarshipInfoFragment:Fragment(R.layout.fragment_starship_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getStarshipInfo().observe(viewLifecycleOwner, Observer {
-            Log.d(Constants.TAG,  it.name+" found!")
+            Log.d(Constants.TAG, it.name + " found!")
             setUI(it)
         })
     }
@@ -46,7 +44,7 @@ class StarshipInfoFragment:Fragment(R.layout.fragment_starship_details) {
     }
 
     private fun setUI(it: Starship?) {
-        if(it ==null){
+        if (it == null) {
             return
         }
         mBinding.tvName.text = it.name
