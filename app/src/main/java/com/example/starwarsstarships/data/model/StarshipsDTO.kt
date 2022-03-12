@@ -7,9 +7,9 @@ data class StarshipsDTO(
     @SerializedName("count")
     val count: Int,
     @SerializedName("next")
-    val next: String,
+    val next: String?,
     @SerializedName("previous")
     val previous: String?,
     @SerializedName("results")
-    val starshipsDT0s: List<StarshipDTO>
+    val starshipDT0s: List<StarshipDTO>
 )

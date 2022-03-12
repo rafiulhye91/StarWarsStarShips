@@ -10,4 +10,8 @@ class StarshipsRepositoryImpl @Inject constructor (private val mApiServices: Api
     override suspend fun getStarships(): StarshipsDTO {
         return mApiServices.getStartships()
     }
+
+    override suspend fun getStarshipsFromPage(page: Int): StarshipsDTO {
+        return mApiServices.getStartshipsFromPage(page)
+    }
 }

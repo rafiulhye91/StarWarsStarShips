@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.starwarsstarships.R
+import com.example.starwarsstarships.domain.model.Starship
 import com.example.starwarsstarships.presentation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val list:MutableList<Starship> = mutableListOf()
         viewModel.mStarshipsState.observe(
             this, Observer {
                 if (it.isLoading){
@@ -25,7 +27,9 @@ class MainActivity : AppCompatActivity() {
                 if (it.starShips != null) {
                     it.starShips.forEach {
                         Log.d("MainActivity", it.name)
+                        list.add(it)
                     }
+                    Log.d("MainActivity",  "------"+list.size.toString())
                  }
                 if (!it.error!!.isEmpty()){
                     Log.d("MainActivity", it.error)
