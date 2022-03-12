@@ -11,10 +11,10 @@ MVVM, Clean architecture with defined Usecase
 
 **Tools/Libs: **
 
-Retrofit2 REST client
-GSon converter for json responses
-OkHttp3 client
-Coroutines for Asynchronous call
-Viewmodel and Livedata for preparing and managing the data for the Activity and Fragment
-Dagger-hil dependency injection
+Retrofit2 REST client\
+GSon converter for json responses\
+OkHttp3 client\
+Coroutines for Asynchronous call\
+Viewmodel and Livedata for preparing and managing the data for the Activity and Fragment\
+Dagger-hilt dependency injection
 
