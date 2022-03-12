@@ -9,7 +9,7 @@ data class StarshipsDTO(
     @SerializedName("next")
     val next: String,
     @SerializedName("previous")
-    val previous: Any,
+    val previous: String?,
     @SerializedName("results")
     val starshipsDT0s: List<StarshipDTO>
 )

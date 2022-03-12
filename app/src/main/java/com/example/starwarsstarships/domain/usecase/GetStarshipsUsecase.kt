@@ -25,11 +25,11 @@ class GetStarshipsUsecase @Inject constructor (private val repository: Starships
             }
             emit(Resource.Success<List<Starship>>(starships))
         } catch (e: HttpException) {
-            emit(Resource.Error<List<Starship>>(message = HTTP_ERROR))
+            emit(Resource.Error<List<Starship>>(message = e.localizedMessage+HTTP_ERROR))
         } catch (e: IOException) {
-            emit(Resource.Error<List<Starship>>(message = NO_INTERNET_ERROR))
+            emit(Resource.Error<List<Starship>>(message = e.localizedMessage+NO_INTERNET_ERROR))
         } catch (e: Exception) {
-            emit(Resource.Error<List<Starship>>(message = UNKNOWN_ERROR))
+            emit(Resource.Error<List<Starship>>(message = e.localizedMessage+UNKNOWN_ERROR))
         }
     }
 }

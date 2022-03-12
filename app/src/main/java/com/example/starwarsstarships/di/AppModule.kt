@@ -14,16 +14,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Singleton
     @Provides
     fun provideApiServices():ApiServices{
         return  RetrofitInstance.getApiServices()
     }
 
+    @Singleton
     @Provides
     fun provideRepository(apiServices: ApiServices):StarshipsRepository{
         return StarshipsRepositoryImpl(apiServices)
     }
 
+    @Singleton
     @Provides
     fun providesUseCase(repository: StarshipsRepository): GetStarshipsUsecase {
         return GetStarshipsUsecase(repository)
