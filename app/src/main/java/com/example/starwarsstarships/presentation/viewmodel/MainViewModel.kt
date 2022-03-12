@@ -18,11 +18,7 @@ class MainViewModel @Inject constructor(private val getStarshipsUsecase: GetStar
     private val _mStarshipsState: MutableLiveData<StarshipsState>  = MutableLiveData<StarshipsState>()
     val mStarshipsState:LiveData<StarshipsState> = _mStarshipsState
 
-    init {
-        getStarships()
-    }
-
-    private fun getStarships(){
+    fun getStarships(){
         getStarshipsUsecase().onEach {
             if(it is Resource.Loading){
                 _mStarshipsState.value = StarshipsState(isLoading = true)

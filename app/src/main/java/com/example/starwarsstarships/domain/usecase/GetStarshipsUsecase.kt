@@ -1,6 +1,8 @@
 package com.example.starwarsstarships.domain.usecase
 
 import android.util.Log
+import com.example.starwarsstarships.common.Constants
+import com.example.starwarsstarships.common.Constants.TAG
 import com.example.starwarsstarships.common.Resource
 import com.example.starwarsstarships.data.remote.Constants.HTTP_ERROR
 import com.example.starwarsstarships.data.remote.Constants.NO_INTERNET_ERROR
@@ -27,7 +29,6 @@ class GetStarshipsUsecase @Inject constructor (private val repository: Starships
             }
             emit(Resource.Success<List<Starship>>(starships))
             while (starshipDT0.next!=null){
-                Log.d("GetStarshipsUsecase", starshipDT0.next.toString())
                 val pageNo:Int = getPageNo(starshipDT0.next.toString());
                 starshipDT0 = repository.getStarshipsFromPage(pageNo)
                 starshipDTOs = starshipDT0.starshipDT0s
