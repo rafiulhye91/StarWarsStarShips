@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val getStarshipsUsecase: GetStarshipsUsecase):ViewModel() {
+class StarshipListViewModel @Inject constructor(private val getStarshipsUsecase: GetStarshipsUsecase):ViewModel() {
 
     private val _mStarshipsState: MutableLiveData<StarshipsState>  = MutableLiveData<StarshipsState>()
     val mStarshipsState:LiveData<StarshipsState> = _mStarshipsState
